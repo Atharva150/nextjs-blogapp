@@ -3,10 +3,11 @@ import { blogs } from "../../db/schema";
 import { desc, eq, sql } from "drizzle-orm";
 
 export async function getBlogs() {
-  return await db
-    .select()
-    .from(blogs)
-    .orderBy(desc(blogs.likes));
+  return await db.query.blogs.findMany({
+    with: {
+        user: true,
+    },
+  });
 }
 
 export async function getBlog(id: number) {
@@ -19,7 +20,7 @@ export async function getBlog(id: number) {
 });
 }
 
-export async function createBlog( 
+export async function createBlog(
   title: string,
   author: string,
   url: string,
@@ -40,5 +41,11 @@ export async function incrementLikes(id: number) {
     .set({
       likes: sql`${blogs.likes} + 1`,
     })
+    .where(eq(blogs.id, id));
+}
+  
+export async function deleteBlog(id: number) {
+  await db
+    .delete(blogs)
     .where(eq(blogs.id, id));
 }

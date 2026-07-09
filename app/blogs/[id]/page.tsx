@@ -1,6 +1,16 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getBlog } from "@/app/lib/blogService";
-import { likeBlogAction } from "@/app/actions/blogActions";
+
+import { auth } from "@/auth";
+
+import {
+  getBlog,
+} from "@/app/lib/blogService";
+
+import {
+  likeBlogAction,
+  deleteBlogAction,
+} from "@/app/actions/blogActions";
 
 interface BlogPageProps {
   params: Promise<{
@@ -19,8 +29,14 @@ export default async function BlogPage({
     notFound();
   }
 
+  const session = await auth();
+
+  const canDelete =
+    session?.user &&
+    Number(session.user.id) === blog.userId;
+
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto max-w-4xl">
 
       <div
         className="
@@ -38,12 +54,27 @@ export default async function BlogPage({
           {blog.title}
         </h1>
 
+        {/* Author */}
 
         <p className="mt-3 text-lg text-slate-400">
-          By{" "}
-          <span className="font-medium text-slate-200">
-            {blog.user?.name}
-          </span>
+          Added by{" "}
+
+          {blog.user ? (
+            <Link
+              href={`/users/${blog.user.username}`}
+              className="
+                font-medium
+                text-blue-400
+                hover:underline
+              "
+            >
+              {blog.user.name}
+            </Link>
+          ) : (
+            <span className="font-medium text-slate-200">
+              Unknown User
+            </span>
+          )}
         </p>
 
         {/* Divider */}
@@ -53,7 +84,7 @@ export default async function BlogPage({
         {/* URL */}
 
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold">
+          <h2 className="text-xl font-semibold text-white">
             Blog URL
           </h2>
 
@@ -76,7 +107,7 @@ export default async function BlogPage({
         <div className="mt-8 flex items-center justify-between">
 
           <div>
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold text-white">
               Likes
             </h2>
 
@@ -85,29 +116,63 @@ export default async function BlogPage({
             </p>
           </div>
 
-          <form action={likeBlogAction}>
-            <input
-              type="hidden"
-              name="id"
-              value={blog.id}
-            />
+          <div className="flex gap-3">
 
-            <button
-              type="submit"
-              className="
-                rounded-lg
-                bg-blue-600
-                px-6
-                py-3
-                font-medium
-                text-white
-                transition
-                hover:bg-blue-700
-              "
-            >
-              👍 Like Blog
-            </button>
-          </form>
+            {/* Like Button */}
+
+            <form action={likeBlogAction}>
+              <input
+                type="hidden"
+                name="id"
+                value={blog.id}
+              />
+
+              <button
+                type="submit"
+                className="
+                  rounded-lg
+                  bg-blue-600
+                  px-6
+                  py-3
+                  font-medium
+                  text-white
+                  transition
+                  hover:bg-blue-700
+                "
+              >
+                👍 Like
+              </button>
+            </form>
+
+            {/* Delete Button */}
+
+            {canDelete && (
+              <form action={deleteBlogAction}>
+                <input
+                  type="hidden"
+                  name="id"
+                  value={blog.id}
+                />
+
+                <button
+                  type="submit"
+                  className="
+                    rounded-lg
+                    bg-red-600
+                    px-6
+                    py-3
+                    font-medium
+                    text-white
+                    transition
+                    hover:bg-red-700
+                  "
+                >
+                  🗑 Delete
+                </button>
+              </form>
+            )}
+
+          </div>
 
         </div>
 

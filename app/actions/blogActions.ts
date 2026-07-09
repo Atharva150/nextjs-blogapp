@@ -3,6 +3,9 @@
 import { redirect } from "next/navigation";
 import { createBlog } from "@/app/lib/blogService";
 import { incrementLikes } from "@/app/lib/blogService";
+import { auth } from "@/auth";
+import { deleteBlog } from "@/app/lib/blogService";
+import { getBlog } from "@/app/lib/blogService";
 
 interface FormState {
   errors: {
@@ -37,6 +40,20 @@ export async function createBlogAction(
 
   const errors: FormState["errors"] = {};
 
+  const session = await auth();
+
+if (!session?.user) {
+  return {
+    errors: {
+      general: "Please login first.",
+    },
+    values: {
+      title,
+      author,
+      url,
+    },
+  };
+}
   if (!title.trim()) {
     errors.title = "Title is required";
   }
@@ -61,7 +78,12 @@ export async function createBlogAction(
   }
 
   try {
-    await createBlog(title, author, url);
+   await createBlog(
+  title,
+  author,
+  url,
+  Number(session.user.id)
+);
   } catch {
     return {
       errors: {
@@ -76,4 +98,31 @@ export async function createBlogAction(
   }
 
   redirect("/blogs");
+}
+
+export async function deleteBlogAction(
+  formData: FormData
+) {
+  const id = Number(formData.get("id"));
+
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  const blog = await getBlog(id);
+
+  if (!blog) {
+    redirect("/blogs");
+  }
+
+  if (blog.userId !== Number(session.user.id)) {
+  redirect("/blogs");
+}
+
+await deleteBlog(id);
+
+redirect("/blogs");
+
 }
