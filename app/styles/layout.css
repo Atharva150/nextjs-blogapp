@@ -1,0 +1,25 @@
+.body{
+    background:#020617;
+    color:#f8fafc;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+.main-content{
+    flex:1;
+}
+
+.page-container{
+    width:100%;
+    max-width:1200px;
+    margin:40px auto;
+    padding:0 25px;
+}
+
+.footer{
+    padding:30px;
+    text-align:center;
+    border-top:1px solid #1e293b;
+    color:#94a3b8;
+}

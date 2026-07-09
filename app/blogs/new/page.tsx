@@ -1,10 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-
+import "./newBlog.css"
 import NewBlogForm from "./NewBlogForm";
 
 export default async function NewBlogPage() {
-  // Check authentication
   const session = await auth();
 
   if (!session) {
@@ -12,20 +11,20 @@ export default async function NewBlogPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
-      {/* Page Heading */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold">
+    <div className="new-blog-page">
+
+      <div className="new-blog-header">
+        <h1 className="new-blog-title">
           Create New Blog
         </h1>
 
-        <p className="mt-2 text-slate-400">
+        <p className="new-blog-description">
           Fill in the details below to publish a new blog.
         </p>
       </div>
 
-      {/* Client Form */}
       <NewBlogForm />
+
     </div>
   );
 }

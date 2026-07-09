@@ -1,0 +1,14 @@
+.home-page{
+    max-width:900px;
+    margin:auto;
+}
+
+.page-title{
+    font-size:52px;
+    margin-bottom:15px;
+}
+
+.page-subtitle{
+    font-size:18px;
+    color:#94a3b8;
+}

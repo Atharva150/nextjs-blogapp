@@ -1,63 +1,63 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+  import NextAuth from "next-auth";
+  import Credentials from "next-auth/providers/credentials";
+  import bcrypt from "bcryptjs";
 
-import { authConfig } from "./auth.config";
+  import { authConfig } from "./auth.config";
 
-import { getUserByUsername } from "@/app/lib/userService";
+  import { getUserByUsername } from "@/app/lib/userService";
 
-export const {
-  handlers,
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
+  export const {
+    handlers,
+    auth,
+    signIn,
+    signOut,
+  } = NextAuth({
 
-  ...authConfig,
+    ...authConfig,
 
-  providers: [
+    providers: [
 
-    Credentials({
+      Credentials({
 
-      credentials: {
-        username: {},
-        password: {},
-      },
+        credentials: {
+          username: {},
+          password: {},
+        },
 
-      async authorize(credentials) {
+        async authorize(credentials) {
 
-        if (
-          !credentials.username ||
-          !credentials.password
-        ) {
-          return null;
-        }
+          if (
+            !credentials.username ||
+            !credentials.password
+          ) {
+            return null;
+          }
 
-        const user =
-          await getUserByUsername(
-            credentials.username as string
-          );
+          const user =
+            await getUserByUsername(
+              credentials.username as string
+            );
 
-        if (!user) {
-          return null;
-        }
+          if (!user) {
+            return null;
+          }
 
-        const passwordCorrect =
-          await bcrypt.compare(
-            credentials.password as string,
-            user.passwordHash
-          );
+          const passwordCorrect =
+            await bcrypt.compare(
+              credentials.password as string,
+              user.passwordHash
+            );
 
-        if (!passwordCorrect) {
-          return null;
-        }
+          if (!passwordCorrect) {
+            return null;
+          }
 
-        return {
-          id: String(user.id),
-          name: user.name,
-          username: user.username
-        };
-      },
-    }),
-  ],
-});
+          return {
+            id: String(user.id),
+            name: user.name,
+            username: user.username
+          };
+        },
+      }),
+    ],
+  });

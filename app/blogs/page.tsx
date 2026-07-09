@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getBlogs } from "../lib/blogService";
 import { auth } from "@/auth";
+import "./blogs.css";
 
 interface BlogsPageProps {
   searchParams: Promise<{
@@ -17,176 +18,108 @@ export default async function BlogsPage({
   const { filter = "" } = await searchParams;
 
   const filteredBlogs = blogs.filter((blog) =>
-    blog.title
-      .toLowerCase()
-      .includes(filter.toLowerCase())
+    blog.title.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
-    <div className="space-y-8">
+    <div className="blogs-page">
 
-      {/* Header */}
+      <div className="blogs-header">
 
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold">
-            Blogs
-          </h1>
+        <div className="blogs-header-left">
+          <h1>Blogs</h1>
 
-          <p className="mt-2 text-slate-400">
+          <p>
             Browse and discover blogs created by users.
           </p>
         </div>
 
         {session && (
-    <Link
-        href="/blogs/new"
-        className="..."
-    >
-        + New Blog
-    </Link>
-)}
+          <Link
+            href="/blogs/new"
+            className="new-blog-btn"
+          >
+            + New Blog
+          </Link>
+        )}
 
       </div>
 
-      {/* Search */}
-
       <form
         action="/blogs"
-        className="flex gap-3"
+        className="search-form"
       >
         <input
           type="text"
           name="filter"
           defaultValue={filter}
           placeholder="Search blogs..."
-          className="
-            flex-1
-            rounded-lg
-            border
-            border-slate-700
-            bg-slate-900
-            px-4
-            py-3
-            text-white
-            placeholder:text-slate-500
-            focus:border-blue-500
-            focus:outline-none
-          "
+          className="search-input"
         />
 
         <button
           type="submit"
-          className="
-            rounded-lg
-            bg-green-600
-            px-6
-            text-white
-            transition
-            hover:bg-green-700
-          "
+          className="search-btn"
         >
           Search
         </button>
+
       </form>
 
-      {/* Empty State */}
-
       {filteredBlogs.length === 0 && (
-        <div
-          className="
-            rounded-xl
-            border
-            border-slate-800
-            bg-slate-900
-            p-10
-            text-center
-          "
-        >
-          <h2 className="text-xl font-semibold">
-            No Blogs Found
-          </h2>
 
-          <p className="mt-2 text-slate-400">
+        <div className="empty-state">
+
+          <h2>No Blogs Found</h2>
+
+          <p>
             Try another search or create a new blog.
           </p>
+
         </div>
+
       )}
 
-      {/* Blog Cards */}
-
-      <div className="grid gap-6">
+      <div className="blogs-list">
 
         {filteredBlogs.map((blog) => (
 
           <div
             key={blog.id}
-            className="
-              rounded-xl
-              border
-              border-slate-800
-              bg-slate-900
-              p-6
-              shadow-lg
-              transition
-              hover:border-blue-500
-              hover:shadow-2xl
-            "
+            className="blog-card"
           >
 
-            <div className="flex items-start justify-between">
+            <div className="blog-card-top">
 
               <div>
 
                 <Link
                   href={`/blogs/${blog.id}`}
-                  className="
-                    text-2xl
-                    font-bold
-                    text-white
-                    transition
-                    hover:text-blue-400
-                  "
+                  className="blog-title"
                 >
                   {blog.title}
                 </Link>
 
-                <p className="mt-2 text-slate-400">
+                <p className="blog-author">
                   By {blog.author}
                 </p>
 
               </div>
 
-              <span
-                className="
-                  rounded-full
-                  bg-blue-600/20
-                  px-3
-                  py-1
-                  text-sm
-                  text-blue-300
-                "
-              >
+              <span className="likes-badge">
                 👍 {blog.likes}
               </span>
 
             </div>
 
-            <div className="mt-5">
-
-              <a
-                href={blog.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  text-blue-400
-                  hover:underline
-                "
-              >
-                {blog.url}
-              </a>
-
-            </div>
+            <a
+              href={blog.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="blog-url"
+            >
+              {blog.url}
+            </a>
 
           </div>
 

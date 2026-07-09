@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { notFound } from "next/navigation";
 
 import { auth } from "@/auth";
@@ -32,152 +33,125 @@ export default async function BlogPage({
   const session = await auth();
 
   const canDelete =
-    session?.user &&
+    !!session?.user?.id &&
     Number(session.user.id) === blog.userId;
 
   return (
-    <div className="mx-auto max-w-4xl">
+   <div className="blog-details-page">
 
-      <div
-        className="
-          rounded-2xl
-          border
-          border-slate-800
-          bg-slate-900
-          p-8
-          shadow-xl
-        "
-      >
-        {/* Title */}
+    <div className="blog-details-card">
 
-        <h1 className="text-4xl font-bold text-white">
-          {blog.title}
+        <h1 className="blog-title">
+            {blog.title}
         </h1>
 
-        {/* Author */}
+        <p className="blog-author">
 
-        <p className="mt-3 text-lg text-slate-400">
-          Added by{" "}
+            Added by{" "}
 
-          {blog.user ? (
-            <Link
-              href={`/users/${blog.user.username}`}
-              className="
-                font-medium
-                text-blue-400
-                hover:underline
-              "
-            >
-              {blog.user.name}
-            </Link>
-          ) : (
-            <span className="font-medium text-slate-200">
-              Unknown User
-            </span>
-          )}
-        </p>
+            {blog.user ? (
 
-        {/* Divider */}
-
-        <div className="my-8 border-t border-slate-800"></div>
-
-        {/* URL */}
-
-        <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-white">
-            Blog URL
-          </h2>
-
-          <a
-            href={blog.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              break-all
-              text-blue-400
-              hover:underline
-            "
-          >
-            {blog.url}
-          </a>
-        </div>
-
-        {/* Likes */}
-
-        <div className="mt-8 flex items-center justify-between">
-
-          <div>
-            <h2 className="text-xl font-semibold text-white">
-              Likes
-            </h2>
-
-            <p className="mt-2 text-2xl font-bold text-blue-400">
-              👍 {blog.likes}
-            </p>
-          </div>
-
-          <div className="flex gap-3">
-
-            {/* Like Button */}
-
-            <form action={likeBlogAction}>
-              <input
-                type="hidden"
-                name="id"
-                value={blog.id}
-              />
-
-              <button
-                type="submit"
-                className="
-                  rounded-lg
-                  bg-blue-600
-                  px-6
-                  py-3
-                  font-medium
-                  text-white
-                  transition
-                  hover:bg-blue-700
-                "
-              >
-                👍 Like
-              </button>
-            </form>
-
-            {/* Delete Button */}
-
-            {canDelete && (
-              <form action={deleteBlogAction}>
-                <input
-                  type="hidden"
-                  name="id"
-                  value={blog.id}
-                />
-
-                <button
-                  type="submit"
-                  className="
-                    rounded-lg
-                    bg-red-600
-                    px-6
-                    py-3
-                    font-medium
-                    text-white
-                    transition
-                    hover:bg-red-700
-                  "
+                <Link
+                    href={`/users/${blog.user.username}`}
+                    className="author-link"
                 >
-                  🗑 Delete
-                </button>
-              </form>
+                    {blog.user.name}
+                </Link>
+
+            ) : (
+
+                <span className="unknown-author">
+                    Unknown User
+                </span>
+
             )}
 
-          </div>
+        </p>
+
+        <div className="blog-divider"></div>
+
+        <div className="blog-url-section">
+
+            <h2 className="section-title">
+                Blog URL
+            </h2>
+
+            <a
+                href={blog.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="blog-url-link"
+            >
+                {blog.url}
+            </a>
 
         </div>
 
-      </div>
+        <div className="blog-actions">
+
+            <div className="likes-box">
+
+                <h2 className="section-title">
+                    Likes
+                </h2>
+
+                <p className="likes-count">
+                    👍 {blog.likes}
+                </p>
+
+            </div>
+
+            <div className="buttons-group">
+
+                <form action={likeBlogAction}>
+
+                    <input
+                        type="hidden"
+                        name="id"
+                        value={blog.id}
+                    />
+
+                    <button
+                        className="like-button"
+                        type="submit"
+                    >
+                        👍 Like
+                    </button>
+
+                </form>
+
+                {canDelete && (
+
+                    <form action={deleteBlogAction}>
+
+                        <input
+                            type="hidden"
+                            name="id"
+                            value={blog.id}
+                        />
+
+                        <button
+                            className="delete-button"
+                            type="submit"
+                            onClick={(e)=>{
+                                if(!confirm("Delete this blog?")){
+                                    e.preventDefault();
+                                }
+                            }}
+                        >
+                            Delete Blog
+                        </button>
+
+                    </form>
+
+                )}
+
+            </div>
+
+        </div>
 
     </div>
+
+</div>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import "./register.css";
 
 import { useActionState } from "react";
 import { registerUser } from "./actions";
@@ -25,221 +26,160 @@ export default function RegisterPage() {
   );
 
   return (
-    <div className="max-w-2xl mx-auto">
+   <div className="register-page">
 
-      {/* Heading */}
+    <div className="register-header">
 
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold">
-          Create Account
+        <h1 className="register-title">
+            Create Account
         </h1>
 
-        <p className="mt-2 text-slate-400">
-          Register a new account to start creating blogs.
+        <p className="register-description">
+            Register a new account to start creating blogs.
         </p>
-      </div>
 
-      <div
-        className="
-          rounded-2xl
-          border
-          border-slate-800
-          bg-slate-900
-          p-8
-          shadow-xl
-        "
-      >
+    </div>
+
+    <div className="register-card">
+
         <form
-          action={formAction}
-          className="space-y-6"
+            action={formAction}
+            className="register-form"
         >
 
-          {/* General Error */}
+            {state.errors.general && (
 
-          {state.errors.general && (
-            <div
-              className="
-                rounded-lg
-                border
-                border-red-500
-                bg-red-500/10
-                p-3
-                text-red-400
-              "
-            >
-              {state.errors.general}
+                <div className="form-error">
+
+                    {state.errors.general}
+
+                </div>
+
+            )}
+
+            <div className="form-group">
+
+                <label
+                    htmlFor="username"
+                    className="form-label"
+                >
+                    Username
+                </label>
+
+                <input
+                    id="username"
+                    name="username"
+                    className="form-input"
+                    defaultValue={state.values.username}
+                />
+
+                {state.errors.username && (
+
+                    <p className="input-error">
+
+                        {state.errors.username}
+
+                    </p>
+
+                )}
+
             </div>
-          )}
 
-          {/* Username */}
+            <div className="form-group">
 
-          <div>
+                <label
+                    htmlFor="name"
+                    className="form-label"
+                >
+                    Name
+                </label>
 
-            <label
-              htmlFor="username"
-              className="mb-2 block font-medium"
+                <input
+                    id="name"
+                    name="name"
+                    className="form-input"
+                    defaultValue={state.values.name}
+                />
+
+                {state.errors.name && (
+
+                    <p className="input-error">
+
+                        {state.errors.name}
+
+                    </p>
+
+                )}
+
+            </div>
+
+            <div className="form-group">
+
+                <label
+                    htmlFor="password"
+                    className="form-label"
+                >
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    className="form-input"
+                />
+
+                {state.errors.password && (
+
+                    <p className="input-error">
+
+                        {state.errors.password}
+
+                    </p>
+
+                )}
+
+            </div>
+
+            <div className="form-group">
+
+                <label
+                    htmlFor="passwordConfirm"
+                    className="form-label"
+                >
+                    Confirm Password
+                </label>
+
+                <input
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    type="password"
+                    className="form-input"
+                />
+
+                {state.errors.passwordConfirm && (
+
+                    <p className="input-error">
+
+                        {state.errors.passwordConfirm}
+
+                    </p>
+
+                )}
+
+            </div>
+
+            <button
+                className="submit-button"
+                type="submit"
             >
-              Username
-            </label>
-
-            <input
-              id="username"
-              name="username"
-              type="text"
-              defaultValue={state.values.username}
-              className="
-                w-full
-                rounded-lg
-                border
-                border-slate-700
-                bg-slate-950
-                px-4
-                py-3
-                text-white
-                placeholder:text-slate-500
-                focus:border-blue-500
-                focus:outline-none
-              "
-            />
-
-            {state.errors.username && (
-              <p className="mt-2 text-red-400 text-sm">
-                {state.errors.username}
-              </p>
-            )}
-
-          </div>
-
-          <div>
-
-            <label
-              htmlFor="name"
-              className="mb-2 block font-medium"
-            >
-              Name
-            </label>
-
-            <input
-              id="name"
-              name="name"
-              type="text"
-              defaultValue={state.values.name}
-              className="
-                w-full
-                rounded-lg
-                border
-                border-slate-700
-                bg-slate-950
-                px-4
-                py-3
-                text-white
-                placeholder:text-slate-500
-                focus:border-blue-500
-                focus:outline-none
-              "
-            />
-
-            {state.errors.name && (
-              <p className="mt-2 text-red-400 text-sm">
-                {state.errors.name}
-              </p>
-            )}
-
-          </div>
-
-          {/* Password */}
-
-          <div>
-
-            <label
-              htmlFor="password"
-              className="mb-2 block font-medium"
-            >
-              Password
-            </label>
-
-            <input
-              id="password"
-              name="password"
-              type="password"
-              className="
-                w-full
-                rounded-lg
-                border
-                border-slate-700
-                bg-slate-950
-                px-4
-                py-3
-                text-white
-                focus:border-blue-500
-                focus:outline-none
-              "
-            />
-
-            {state.errors.password && (
-              <p className="mt-2 text-red-400 text-sm">
-                {state.errors.password}
-              </p>
-            )}
-
-          </div>
-
-
-          <div>
-
-            <label
-              htmlFor="passwordConfirm"
-              className="mb-2 block font-medium"
-            >
-              Confirm Password
-            </label>
-
-            <input
-              id="passwordConfirm"
-              name="passwordConfirm"
-              type="password"
-              className="
-                w-full
-                rounded-lg
-                border
-                border-slate-700
-                bg-slate-950
-                px-4
-                py-3
-                text-white
-                focus:border-blue-500
-                focus:outline-none
-              "
-            />
-
-            {state.errors.passwordConfirm && (
-              <p className="mt-2 text-red-400 text-sm">
-                {state.errors.passwordConfirm}
-              </p>
-            )}
-
-          </div>
-
-
-          <button
-            type="submit"
-            className="
-              w-full
-              rounded-lg
-              bg-blue-600
-              py-3
-              text-lg
-              font-semibold
-              text-white
-              transition
-              hover:bg-blue-700
-            "
-          >
-            Register
-          </button>
+                Register
+            </button>
 
         </form>
-      </div>
+
     </div>
+
+</div>
   );
 }

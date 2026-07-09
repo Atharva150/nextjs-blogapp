@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 import { getUser } from "@/app/lib/userService";
 
-interface UserPageProps {
+interface Props {
   params: Promise<{
     username: string;
   }>;
@@ -11,7 +11,7 @@ interface UserPageProps {
 
 export default async function UserPage({
   params,
-}: UserPageProps) {
+}: Props) {
   const { username } = await params;
 
   const user = await getUser(username);
@@ -21,10 +21,7 @@ export default async function UserPage({
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
-
-      {/* Header */}
-
+    <div className="space-y-8">
       <div
         className="
           rounded-2xl
@@ -32,7 +29,6 @@ export default async function UserPage({
           border-slate-800
           bg-slate-900
           p-8
-          shadow-xl
         "
       >
         <h1 className="text-4xl font-bold">
@@ -43,127 +39,49 @@ export default async function UserPage({
           @{user.username}
         </p>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mt-8">
+          <h2 className="mb-4 text-2xl font-semibold">
+            Blogs
+          </h2>
 
-          <span
-            className="
-              rounded-full
-              bg-blue-600/20
-              px-4
-              py-2
-              text-blue-300
-            "
-          >
-            Blogs Added: {user.blogs.length}
-          </span>
-
-        </div>
-      </div>
-
-      {/* Blog Section */}
-
-      <div>
-
-        <h2 className="mb-6 text-3xl font-bold">
-          Blogs
-        </h2>
-
-        {user.blogs.length === 0 ? (
-
-          <div
-            className="
-              rounded-xl
-              border
-              border-slate-800
-              bg-slate-900
-              p-10
-              text-center
-            "
-          >
+          {user.blogs.length === 0 ? (
             <p className="text-slate-400">
-              This user hasn't added any blogs yet.
+              This user hasn't created any blogs yet.
             </p>
-          </div>
-
-        ) : (
-
-          <div className="space-y-5">
-
-            {user.blogs.map((blog) => (
-
-              <div
-                key={blog.id}
-                className="
-                  rounded-xl
-                  border
-                  border-slate-800
-                  bg-slate-900
-                  p-6
-                  shadow-lg
-                  transition
-                  hover:border-blue-500
-                "
-              >
-                <div className="flex items-start justify-between">
-
-                  <div>
-
-                    <Link
-                      href={`/blogs/${blog.id}`}
-                      className="
-                        text-2xl
-                        font-semibold
-                        hover:text-blue-400
-                      "
-                    >
-                      {blog.title}
-                    </Link>
-
-                    <p className="mt-2 text-slate-400">
-                      {blog.author}
-                    </p>
-
-                  </div>
-
-                  <span
-                    className="
-                      rounded-full
-                      bg-green-600/20
-                      px-3
-                      py-1
-                      text-green-300
-                    "
-                  >
-                    👍 {blog.likes}
-                  </span>
-
-                </div>
-
-                <a
-                  href={blog.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+          ) : (
+            <div className="space-y-4">
+              {user.blogs.map((blog) => (
+                <div
+                  key={blog.id}
                   className="
-                    mt-4
-                    block
-                    break-all
-                    text-blue-400
-                    hover:underline
+                    rounded-lg
+                    border
+                    border-slate-700
+                    bg-slate-950
+                    p-5
                   "
                 >
-                  {blog.url}
-                </a>
+                  <Link
+                    href={`/blogs/${blog.id}`}
+                    className="
+                      text-xl
+                      font-semibold
+                      text-blue-400
+                      hover:underline
+                    "
+                  >
+                    {blog.title}
+                  </Link>
 
-              </div>
-
-            ))}
-
-          </div>
-
-        )}
-
+                  <p className="mt-2 text-slate-400">
+                    👍 {blog.likes} Likes
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-
     </div>
   );
 }

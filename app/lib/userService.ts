@@ -3,7 +3,11 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getUsers() {
-  return await db.select().from(users);
+  return await db.query.users.findMany({
+    with: {
+      blogs: true,
+    },
+  });
 }
 
 export async function getUser(username: string) {

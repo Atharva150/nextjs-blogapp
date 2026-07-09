@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import "./profile.css";
 
 export default async function MePage() {
   const session = await auth();
@@ -9,22 +10,40 @@ export default async function MePage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-4xl font-bold">
+   <div className="profile-page">
+
+    <h1 className="profile-title">
         My Profile
-      </h1>
+    </h1>
 
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
-        <p>
-          <strong>Name:</strong>{" "}
-          {session.user?.name}
-        </p>
+    <div className="profile-card">
 
-        <p className="mt-2">
-          <strong>ID:</strong>{" "}
-          {session.user?.id}
-        </p>
-      </div>
+        <div className="profile-row">
+
+            <span className="profile-label">
+                Name
+            </span>
+
+            <span className="profile-value">
+                {session.user?.name}
+            </span>
+
+        </div>
+
+        <div className="profile-row">
+
+            <span className="profile-label">
+                ID
+            </span>
+
+            <span className="profile-value">
+                {session.user?.id}
+            </span>
+
+        </div>
+
     </div>
+
+</div>
   );
 }

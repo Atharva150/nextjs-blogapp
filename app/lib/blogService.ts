@@ -30,7 +30,8 @@ export async function createBlog(
     title,
     author,
     url,
-    userId
+    userId,
+    likes:0,
   });
 }
 

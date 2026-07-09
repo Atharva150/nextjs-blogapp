@@ -1,0 +1,94 @@
+.blog-details-page{
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
+}
+
+.blog-details-card{
+    background:#111827;
+    border:1px solid #374151;
+    border-radius:14px;
+    padding:35px;
+}
+
+.blog-title{
+    font-size:42px;
+    color:white;
+}
+
+.blog-author{
+    margin-top:15px;
+    color:#94a3b8;
+}
+
+.author-link{
+    color:#60a5fa;
+    font-weight:bold;
+}
+
+.author-link:hover{
+    text-decoration:underline;
+}
+
+.unknown-author{
+    color:white;
+}
+
+.blog-divider{
+    margin:30px 0;
+    border-top:1px solid #374151;
+}
+
+.blog-url-section{
+    margin-bottom:35px;
+}
+
+.section-title{
+    color:white;
+    font-size:24px;
+    margin-bottom:12px;
+}
+
+.blog-url-link{
+    color:#60a5fa;
+    word-break:break-all;
+}
+
+.blog-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.likes-box{
+    display:flex;
+    flex-direction:column;
+}
+
+.likes-count{
+    color:#3b82f6;
+    font-size:32px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.buttons-group{
+    display:flex;
+    gap:15px;
+}
+
+.like-button{
+    background:#2563eb;
+    color:white;
+    padding:12px 22px;
+    border:none;
+    border-radius:8px;
+}
+
+.delete-button{
+    background:#dc2626;
+    color:white;
+    padding:12px 22px;
+    border:none;
+    border-radius:8px;
+}

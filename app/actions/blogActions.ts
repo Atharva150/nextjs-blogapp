@@ -99,15 +99,12 @@ if (!session?.user) {
 
   redirect("/blogs");
 }
-
-export async function deleteBlogAction(
-  formData: FormData
-) {
+export async function deleteBlogAction(formData: FormData) {
   const id = Number(formData.get("id"));
 
   const session = await auth();
 
-  if (!session?.user) {
+  if (!session?.user?.id) {
     redirect("/login");
   }
 
@@ -118,11 +115,10 @@ export async function deleteBlogAction(
   }
 
   if (blog.userId !== Number(session.user.id)) {
+    throw new Error("Unauthorized");
+  }
+
+  await deleteBlog(id);
+
   redirect("/blogs");
-}
-
-await deleteBlog(id);
-
-redirect("/blogs");
-
 }

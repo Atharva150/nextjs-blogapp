@@ -14,7 +14,7 @@ const initialState = {
   values: {
     title: "",
     author: "",
-    url: ""
+    url: "",
   },
 };
 
@@ -25,43 +25,26 @@ export default function NewBlogForm() {
   );
 
   return (
-    <div
-      className="
-        rounded-2xl
-        border
-        border-slate-800
-        bg-slate-900
-        p-8
-        shadow-xl
-      "
-    >
+    <div className="blog-form-card">
+
       <form
         action={formAction}
-        className="space-y-6"
+        className="blog-form"
       >
-        {/* General Error */}
 
-        {/* {state.errors.general && (
-          <div
-            className="
-              rounded-lg
-              border
-              border-red-500
-              bg-red-500/10
-              p-4
-              text-red-400
-            "
-          >
+        {state.errors.general && (
+          <div className="form-error">
             {state.errors.general}
-          </div> */}
-        {/* )} */}
+          </div>
+        )}
 
         {/* Title */}
 
-        <div>
+        <div className="form-group">
+
           <label
             htmlFor="title"
-            className="mb-2 block font-medium"
+            className="form-label"
           >
             Blog Title
           </label>
@@ -72,34 +55,24 @@ export default function NewBlogForm() {
             type="text"
             defaultValue={state.values.title}
             placeholder="Understanding React Server Components"
-            className="
-              w-full
-              rounded-lg
-              border
-              border-slate-700
-              bg-slate-950
-              px-4
-              py-3
-              text-white
-              placeholder:text-slate-500
-              focus:border-blue-500
-              focus:outline-none
-            "
+            className="form-input"
           />
 
           {state.errors.title && (
-            <p className="mt-2 text-sm text-red-400">
+            <p className="input-error">
               {state.errors.title}
             </p>
           )}
+
         </div>
 
         {/* Author */}
 
-        <div>
+        <div className="form-group">
+
           <label
             htmlFor="author"
-            className="mb-2 block font-medium"
+            className="form-label"
           >
             Author
           </label>
@@ -110,34 +83,24 @@ export default function NewBlogForm() {
             type="text"
             defaultValue={state.values.author}
             placeholder="John Doe"
-            className="
-              w-full
-              rounded-lg
-              border
-              border-slate-700
-              bg-slate-950
-              px-4
-              py-3
-              text-white
-              placeholder:text-slate-500
-              focus:border-blue-500
-              focus:outline-none
-            "
+            className="form-input"
           />
 
           {state.errors.author && (
-            <p className="mt-2 text-sm text-red-400">
+            <p className="input-error">
               {state.errors.author}
             </p>
           )}
+
         </div>
 
         {/* URL */}
 
-        <div>
+        <div className="form-group">
+
           <label
             htmlFor="url"
-            className="mb-2 block font-medium"
+            className="form-label"
           >
             Blog URL
           </label>
@@ -148,47 +111,26 @@ export default function NewBlogForm() {
             type="url"
             defaultValue={state.values.url}
             placeholder="https://example.com"
-            className="
-              w-full
-              rounded-lg
-              border
-              border-slate-700
-              bg-slate-950
-              px-4
-              py-3
-              text-white
-              placeholder:text-slate-500
-              focus:border-blue-500
-              focus:outline-none
-            "
+            className="form-input"
           />
 
           {state.errors.url && (
-            <p className="mt-2 text-sm text-red-400">
+            <p className="input-error">
               {state.errors.url}
             </p>
           )}
-        </div>
 
-        {/* Submit */}
+        </div>
 
         <button
           type="submit"
-          className="
-            w-full
-            rounded-lg
-            bg-blue-600
-            py-3
-            text-lg
-            font-semibold
-            text-white
-            transition
-            hover:bg-blue-700
-          "
+          className="submit-button"
         >
           Create Blog
         </button>
+
       </form>
+
     </div>
   );
 }

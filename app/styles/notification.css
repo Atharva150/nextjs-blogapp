@@ -1,0 +1,21 @@
+.notification{
+
+    padding:18px;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+}
+
+.notification.success{
+
+    background:#14532d;
+
+}
+
+.notification.error{
+
+    background:#7f1d1d;
+
+}

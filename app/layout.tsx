@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./styles/layout.css";
+import "./styles/home.css";
+import "./styles/forms.css";
+import "./styles/buttons.css";
+import "./styles/cards.css";
+import "./styles/notification.css"; 
 
 import Navbar from "./components/Navbar";
 import Notification from "./components/Notification";
@@ -17,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-slate-950 text-slate-100">
+     <body className="body">
         <NotificationProvider>
           <div className="flex min-h-screen flex-col">
             {/* Navigation */}
@@ -26,15 +32,14 @@ export default function RootLayout({
             {/* Notification */}
             <Notification />
 
-            {/* Main Content */}
-            <main className="flex-1">
-              <div className="mx-auto max-w-6xl px-6 py-10">
+           <main className="main-content">
+             <div className="page-container">
                 {children}
               </div>
             </main>
 
             {/* Footer */}
-            <footer className="border-t border-slate-800 py-6 text-center text-sm text-slate-400">
+            <footer className="footer">
               © {new Date().getFullYear()} Blog App • Built with Next.js &
               Drizzle ORM
             </footer>

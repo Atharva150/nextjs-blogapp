@@ -1,0 +1,19 @@
+.card{
+
+    background:#0f172a;
+
+    border:1px solid #1e293b;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+
+}
+
+.card:hover{
+
+    border-color:#2563eb;
+
+}

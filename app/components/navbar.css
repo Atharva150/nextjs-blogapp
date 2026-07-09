@@ -1,0 +1,173 @@
+.navbar{
+    background:#0f172a;
+    border-bottom:1px solid #1e293b;
+
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+.navbar-container{
+
+    width:92%;
+    max-width:1250px;
+
+    margin:auto;
+
+    height:78px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.navbar-logo{
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:30px;
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    transition:.25s;
+}
+
+.navbar-logo:hover{
+
+    color:#60a5fa;
+}
+
+.navbar-links{
+
+    display:flex;
+    align-items:center;
+
+    gap:18px;
+}
+
+.navbar-link{
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+    font-size:16px;
+
+    transition:.25s;
+}
+
+.navbar-link:hover{
+
+    color:white;
+}
+
+.navbar-user{
+
+    color:#cbd5e1;
+
+    font-size:15px;
+}
+
+.navbar-username{
+
+    color:white;
+
+    font-weight:700;
+}
+
+/* LOGIN */
+
+.login-button{
+
+    display:inline-block;
+
+    text-decoration:none;
+
+    padding:11px 22px;
+
+    border-radius:8px;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:white;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+.login-button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(37,99,235,.35);
+}
+
+/* REGISTER */
+
+.register-button{
+
+    display:inline-block;
+
+    text-decoration:none;
+
+    padding:11px 22px;
+
+    border-radius:8px;
+
+    background:#1f2937;
+
+    border:1px solid #475569;
+
+    color:white;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+.register-button:hover{
+
+    background:#334155;
+
+    border-color:#60a5fa;
+}
+
+/* LOGOUT */
+
+.logout-button{
+
+    border:none;
+
+    padding:11px 22px;
+
+    border-radius:8px;
+
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+
+    color:white;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.logout-button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(239,68,68,.35);
+}
+
+.logout-button:active{
+
+    transform:scale(.97);
+}

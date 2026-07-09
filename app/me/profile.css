@@ -1,0 +1,38 @@
+.profile-page{
+    width:90%;
+    max-width:700px;
+    margin:40px auto;
+}
+
+.profile-title{
+    font-size:40px;
+    color:white;
+    margin-bottom:30px;
+}
+
+.profile-card{
+    background:#111827;
+    border:1px solid #374151;
+    border-radius:12px;
+    padding:30px;
+}
+
+.profile-row{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid #374151;
+}
+
+.profile-row:last-child{
+    border-bottom:none;
+}
+
+.profile-label{
+    color:#94a3b8;
+    font-weight:bold;
+}
+
+.profile-value{
+    color:white;
+}
