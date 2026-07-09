@@ -1,40 +1,31 @@
-import { createBlog } from "@/app/lib/actions";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function NewBlogPage() {
+import NewBlogForm from "./NewBlogForm";
+
+export default async function NewBlogPage() {
+  // Check authentication
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">
-        Create Blog
-      </h1>
+    <div className="mx-auto max-w-2xl">
+      {/* Page Heading */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold">
+          Create New Blog
+        </h1>
 
-      <form
-        action={createBlog}
-        className="flex flex-col gap-4 max-w-md"
-      >
-        <input
-          name="title"
-          placeholder="Title"
-          className="border p-2 rounded"
-        />
+        <p className="mt-2 text-slate-400">
+          Fill in the details below to publish a new blog.
+        </p>
+      </div>
 
-        <input
-          name="author"
-          placeholder="Author"
-          className="border p-2 rounded"
-        />
-
-        <input
-          name="url"
-          placeholder="URL"
-          className="border p-2 rounded"
-        />
-
-        <button
-          className="bg-blue-600 text-white rounded p-2"
-        >
-          Create Blog
-        </button>
-      </form>
+      {/* Client Form */}
+      <NewBlogForm />
     </div>
   );
 }

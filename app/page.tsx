@@ -1,7 +1,10 @@
+// import TestNotification from "@/app/components/TestNotification";
+
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-4xl font-bold">
+    <section className="space-y-6">
+    <div className="max-w-5xl mx-auto">
+      <h1 className="text-5xl font-bold">
         Blog Application
       </h1>
 
@@ -9,5 +12,6 @@ export default function Home() {
         Welcome to the Blog App built with Next.js.
       </p>
     </div>
+    </section>
   );
 }

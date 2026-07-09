@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1783479888023,
+      "tag": "0000_panoramic_sharon_ventura",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783505099420,
+      "tag": "0001_volatile_king_bedlam",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783506723466,
+      "tag": "0002_robust_bloodstorm",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783507667506,
+      "tag": "0003_crazy_sally_floyd",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1783559836378,
+      "tag": "0004_fine_stranger",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,31 +1,26 @@
-"use server";
+    "use server";
 
-import { blogs } from "./blogs";
-import { redirect } from "next/navigation";
+    import { redirect } from "next/navigation";
+    import {
+    createBlog as createBlogInDB,
+    incrementLikes,
+    } from "./blogService";
 
-export async function createBlog(formData: FormData) {
-  const title = formData.get("title") as string;
-  const author = formData.get("author") as string;
-  const url = formData.get("url") as string;
 
-  blogs.push({
-    id: blogs.length + 1,
-    title,
-    author,
-    url,
-    likes: 0,
-  });
-  redirect("/blogs");
-}
+    export async function createBlog(formData: FormData) {
+    const title = formData.get("title") as string;
+    const author = formData.get("author") as string;
+    const url = formData.get("url") as string;
 
-export async function likeBlog(formData: FormData) {
-  const id = Number(formData.get("id"));
+    await createBlogInDB(title, author, url);
 
-  const blog = blogs.find((b) => b.id === id);
+    redirect("/blogs");
+    }
 
-  if (blog) {
-    blog.likes += 1;
-  }
+    export async function likeBlog(formData: FormData) {
+    const id = Number(formData.get("id"));
 
-  redirect(`/blogs/${id}`);
-}
+    await incrementLikes(id);
+
+    redirect(`/blogs/${id}`);
+    }

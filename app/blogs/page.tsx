@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { blogs } from "../lib/blogs";
+import { getBlogs } from "../lib/blogService";
+import { auth } from "@/auth";
 
 interface BlogsPageProps {
   searchParams: Promise<{
@@ -10,83 +11,189 @@ interface BlogsPageProps {
 export default async function BlogsPage({
   searchParams,
 }: BlogsPageProps) {
+  const blogs = await getBlogs();
+  const session = await auth();
+
   const { filter = "" } = await searchParams;
 
   const filteredBlogs = blogs.filter((blog) =>
-    blog.title.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  const sortedBlogs = [...filteredBlogs].sort(
-    (a, b) => b.likes - a.likes
+    blog.title
+      .toLowerCase()
+      .includes(filter.toLowerCase())
   );
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">
-        Blogs
-      </h1>
+    <div className="space-y-8">
 
-      {/* Search Form */}
+      {/* Header */}
+
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-4xl font-bold">
+            Blogs
+          </h1>
+
+          <p className="mt-2 text-slate-400">
+            Browse and discover blogs created by users.
+          </p>
+        </div>
+
+        {session && (
+    <Link
+        href="/blogs/new"
+        className="..."
+    >
+        + New Blog
+    </Link>
+)}
+
+      </div>
+
+      {/* Search */}
+
       <form
         action="/blogs"
-        className="flex gap-2 mb-6"
+        className="flex gap-3"
       >
         <input
           type="text"
           name="filter"
           defaultValue={filter}
-          placeholder="Search by title"
-          className="border rounded p-2 flex-1"
+          placeholder="Search blogs..."
+          className="
+            flex-1
+            rounded-lg
+            border
+            border-slate-700
+            bg-slate-900
+            px-4
+            py-3
+            text-white
+            placeholder:text-slate-500
+            focus:border-blue-500
+            focus:outline-none
+          "
         />
 
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 rounded"
+          className="
+            rounded-lg
+            bg-green-600
+            px-6
+            text-white
+            transition
+            hover:bg-green-700
+          "
         >
           Search
         </button>
       </form>
 
-      {/* New Blog Button */}
-      <div className="mb-6">
-        <Link
-          href="/blogs/new"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          New Blog
-        </Link>
-      </div>
+      {/* Empty State */}
 
-      {/* Blog List */}
-      <div className="space-y-4">
-        {sortedBlogs.length === 0 ? (
-          <p>No blogs found.</p>
-        ) : (
-          sortedBlogs.map((blog) => (
-            <div
-              key={blog.id}
-              className="border rounded-lg p-4 shadow"
-            >
-              <h2 className="text-xl font-semibold">
-                <Link href={`/blogs/${blog.id}`}>
+      {filteredBlogs.length === 0 && (
+        <div
+          className="
+            rounded-xl
+            border
+            border-slate-800
+            bg-slate-900
+            p-10
+            text-center
+          "
+        >
+          <h2 className="text-xl font-semibold">
+            No Blogs Found
+          </h2>
+
+          <p className="mt-2 text-slate-400">
+            Try another search or create a new blog.
+          </p>
+        </div>
+      )}
+
+      {/* Blog Cards */}
+
+      <div className="grid gap-6">
+
+        {filteredBlogs.map((blog) => (
+
+          <div
+            key={blog.id}
+            className="
+              rounded-xl
+              border
+              border-slate-800
+              bg-slate-900
+              p-6
+              shadow-lg
+              transition
+              hover:border-blue-500
+              hover:shadow-2xl
+            "
+          >
+
+            <div className="flex items-start justify-between">
+
+              <div>
+
+                <Link
+                  href={`/blogs/${blog.id}`}
+                  className="
+                    text-2xl
+                    font-bold
+                    text-white
+                    transition
+                    hover:text-blue-400
+                  "
+                >
                   {blog.title}
                 </Link>
-              </h2>
 
-              <p>Author: {blog.author}</p>
+                <p className="mt-2 text-slate-400">
+                  By {blog.author}
+                </p>
 
-              <p>Likes: {blog.likes}</p>
+              </div>
 
-              <Link
-                href={blog.url}
-                className="text-blue-600 underline"
+              <span
+                className="
+                  rounded-full
+                  bg-blue-600/20
+                  px-3
+                  py-1
+                  text-sm
+                  text-blue-300
+                "
               >
-                Visit Blog
-              </Link>
+                👍 {blog.likes}
+              </span>
+
             </div>
-          ))
-        )}
+
+            <div className="mt-5">
+
+              <a
+                href={blog.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  text-blue-400
+                  hover:underline
+                "
+              >
+                {blog.url}
+              </a>
+
+            </div>
+
+          </div>
+
+        ))}
+
       </div>
+
     </div>
   );
 }
